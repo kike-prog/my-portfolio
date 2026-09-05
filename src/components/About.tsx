@@ -43,7 +43,7 @@ export const About: React.FC = () => {
 
               <div className="relative rounded-2xl overflow-hidden glass-card border border-white/10 p-2 shadow-2xl">
                 <img
-                  src="/avartar.jpg"
+                  src="/avartar.png"
                   alt={personal.name}
                   className="w-full h-80 sm:h-96 object-cover object-top rounded-xl transition-transform duration-500 group-hover:scale-105"
                 />
