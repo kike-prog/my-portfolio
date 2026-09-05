@@ -135,24 +135,6 @@ export const portfolioData = {
         "Interactive order tracking map and animated delivery status timeline",
         "Glassmorphism order summary drawer with instant price breakdown"
       ]
-    },
-    {
-      id: "devconnect",
-      title: "Luminos – Modern UI Component System",
-      tagline: "High-Performance Developer Hub & Design System",
-      description: "A showcase platform for reusable UI components, glowing interactive widgets, live sandbox customization, and documentation with copy-to-clipboard code snippets.",
-      image: "/devconnect.jpg",
-      tags: ["React", "TypeScript", "Tailwind CSS", "Design Systems"],
-      category: "react",
-      githubUrl: "https://github.com",
-      liveUrl: "https://luminos-ui.vercel.app",
-      featured: true,
-      highlights: [
-        "Live interactive component sandbox with instant theme switcher",
-        "One-click syntax-highlighted code snippet copy",
-        "Strict TypeScript typing and accessibility compliant ARIA patterns",
-        "Fluid responsive layout tested across mobile, tablet, and desktop"
-      ]
     }
   ] as Project[],
 
