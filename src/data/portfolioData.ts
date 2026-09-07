@@ -144,7 +144,7 @@ export const portfolioData = {
       role: "Frontend Developer",
       company: "Tech Innovation Hub",
       location: "Remote / Hybrid",
-      period: "2023 – Present",
+      period: "2024 – Present",
       type: "Full-time",
       description: [
         "Engineered responsive, highly performant web applications using React, TypeScript, and Next.js for high-growth digital products.",
@@ -159,7 +159,7 @@ export const portfolioData = {
       role: "Junior Frontend Developer",
       company: "Digital Web Studio",
       location: "Remote",
-      period: "2022 – 2023",
+      period: "2023 – 2024",
       type: "Contract",
       description: [
         "Developed custom client websites and landing pages with rich animations using JavaScript, HTML5, CSS3, and Tailwind CSS.",
@@ -175,7 +175,7 @@ export const portfolioData = {
       id: "edu-1",
       degree: "Bachelor of Science in Computer Science",
       institution: "SCHOOL OF MANAGEMENT AND TECHNOLOGY",
-      period: "2019 – 2023",
+      period: "2020 – 2024",
       location: "Nigeria",
       grade: "First Class Honours / Top Percentile",
       details: [

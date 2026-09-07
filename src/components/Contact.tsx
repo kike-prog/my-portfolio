@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Github, Linkedin, Send, Copy, Check, MessageSquare, PhoneCall, Sparkles } from 'lucide-react';
+import { Mail, Github, Linkedin, Send, Copy, Check, MessageSquare, PhoneCall, Sparkles, AlertCircle } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
 export const Contact: React.FC = () => {
@@ -7,6 +7,7 @@ export const Contact: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(personal.social.email);
@@ -14,16 +15,44 @@ export const Contact: React.FC = () => {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
     setStatus('sending');
-    setTimeout(() => {
-      setStatus('sent');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setStatus('idle'), 5000);
-    }, 1200);
+    setErrorMessage('');
+
+    try {
+      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '9e840ddb-337d-4e05-a77e-9b48e5dfe834';
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject || `New message from ${formData.name} via Portfolio`,
+          message: formData.message,
+          from_name: formData.name,
+        }),
+      });
+
+      const result = await response.json();
+      if (response.ok && result.success) {
+        setStatus('sent');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => setStatus('idle'), 6000);
+      } else {
+        setStatus('error');
+        setErrorMessage(result.message || 'Failed to send message. Please try again or email directly.');
+      }
+    } catch (err) {
+      setStatus('error');
+      setErrorMessage('Network error. Please check your connection or email directly.');
+    }
   };
 
   return (
@@ -143,11 +172,18 @@ export const Contact: React.FC = () => {
                 </div>
               )}
 
+              {status === 'error' && (
+                <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 flex items-center gap-3 animate-fadeIn">
+                  <AlertCircle className="w-5 h-5 shrink-0" />
+                  <span className="text-sm font-medium">{errorMessage}</span>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                      Your Name *
+                      Your Name
                     </label>
                     <input
                       type="text"
@@ -161,7 +197,7 @@ export const Contact: React.FC = () => {
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                      Your Email *
+                      Your Email
                     </label>
                     <input
                       type="email"
@@ -189,7 +225,7 @@ export const Contact: React.FC = () => {
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                    Message *
+                    Message
                   </label>
                   <textarea
                     rows={4}
